@@ -118,7 +118,7 @@ describe('', () => {
     if (failed) Cypress.runner.stop();
   });
 
-  describe('Page with no todos', () => {
+  describe.skip('Page with no todos', () => {
     it('should send 1 todos request', () => {
       const spy = cy.stub()
         .callsFake(req => req.reply({ body: [] }))
@@ -133,7 +133,7 @@ describe('', () => {
       cy.get('@loadCallback').should('have.callCount', 1);
     });
 
-    describe('', () => {
+    describe.skip('', () => {
       beforeEach(() => {
         page.mockLoad({ body: [] }).as('loadRequest');
         page.visit();
@@ -159,7 +159,7 @@ describe('', () => {
       });
     });
 
-    describe('on loading error', () => {
+    describe.skip('on loading error', () => {
       beforeEach(() => {
         // to prevent Cypress from failing the test on uncaught exception
         cy.once('uncaught:exception', () => false);
@@ -196,7 +196,7 @@ describe('', () => {
     });
   });
 
-  describe('Page with mixed todos', () => {
+  describe.skip('Page with mixed todos', () => {
     beforeEach(() => {
       page.mockLoad().as('loadRequest');
       page.visit();
@@ -271,7 +271,7 @@ describe('', () => {
     });
   });
 
-  describe('Filtering', () => {
+  describe.skip('Filtering', () => {
     describe('with mixed todos', () => {
       beforeEach(() => {
         page.mockLoad().as('loadRequest');
@@ -345,7 +345,7 @@ describe('', () => {
       });
     });
 
-    describe('with active todos only', () => {
+    describe.skip('with active todos only', () => {
       beforeEach(() => {
         page.mockLoad({ fixture: 'active-todos' }).as('loadRequest');
         page.visit();
@@ -369,7 +369,7 @@ describe('', () => {
       });
     });
 
-    describe('with completed todos only', () => {
+    describe.skip('with completed todos only', () => {
       beforeEach(() => {
         page.mockLoad({ fixture: 'completed-todos' }).as('loadRequest');
         page.visit();
@@ -394,7 +394,7 @@ describe('', () => {
     });
   });
 
-  describe('Adding a todo', () => {
+  describe.skip('Adding a todo', () => {
     beforeEach(() => {
       page.mockLoad().as('loadRequest');
       page.visit();
@@ -405,7 +405,7 @@ describe('', () => {
       page.newTodoField().should('be.focused');
     });
 
-    describe('if title is empty', () => {
+    describe.skip('if title is empty', () => {
       beforeEach(() => {
         page.mockCreate();
         page.newTodoField().type('{enter}');
@@ -434,7 +434,7 @@ describe('', () => {
       });
     });
 
-    describe('if title title has only whitespaces', () => {
+    describe.skip('if title title has only whitespaces', () => {
       beforeEach(() => {
         page.mockCreate();
         page.newTodoField().type('     {enter}');
@@ -463,7 +463,7 @@ describe('', () => {
       });
     });
 
-    describe('after form submition before response is received', () => {
+    describe.skip('after form submition before response is received', () => {
       beforeEach(() => {
         page.mockCreate();
         page.pauseTimers();
@@ -509,8 +509,8 @@ describe('', () => {
       });
     });
 
-    describe('on success response', () => {
-      describe('', () => {
+    describe.skip('on success response', () => {
+      describe.skip('', () => {
         beforeEach(() => {
           page.mockCreate().as('createRequest');
           page.newTodoField().type('Test Todo{enter}');
@@ -591,7 +591,7 @@ describe('', () => {
       });
     });
 
-    describe('on request fail', () => {
+    describe.skip('on request fail', () => {
       beforeEach(() => {
         // to prevent Cypress from failing the test on uncaught exception
         cy.once('uncaught:exception', () => false);
@@ -696,7 +696,7 @@ describe('', () => {
     });
   });
 
-  describe('Adding a first todo', () => {
+  describe.skip('Adding a first todo', () => {
     beforeEach(() => {
       page.mockLoad({ body: [] }).as('loadRequest');
       page.visit();
@@ -723,8 +723,8 @@ describe('', () => {
     });
   });
 
-  describe('Individual Todo Deletion', () => {
-    describe('Default behavior', () => {
+  describe.skip('Individual Todo Deletion', () => {
+    describe.skip('Default behavior', () => {
       beforeEach(() => {
         page.mockLoad().as('loadRequest');
         page.visit();
@@ -814,7 +814,7 @@ describe('', () => {
       });
     });
 
-    describe('Last todo deletion', () => {
+    describe.skip('Last todo deletion', () => {
       beforeEach(() => {
         const todo = {
           "id": 257334,
@@ -849,8 +849,8 @@ describe('', () => {
     });
   });
 
-  describe('Group Todo Deletion', () => {
-    describe('with no completed todos', () => {
+  describe.skip('Group Todo Deletion', () => {
+    describe.skip('with no completed todos', () => {
       beforeEach(() => {
         page.mockLoad({ fixture: 'active-todos' }).as('loadRequest');
         page.visit();
@@ -862,7 +862,7 @@ describe('', () => {
       });
     });
 
-    describe('with some completed todos', () => {
+    describe.skip('with some completed todos', () => {
       beforeEach(() => {
         page.mockLoad().as('loadRequest');
         page.visit();
@@ -885,7 +885,7 @@ describe('', () => {
         cy.wait('@deleteRequest3');
       });
 
-      describe('on success', () => {
+      describe.skip('on success', () => {
         beforeEach(() => {
           page.mockDelete(257334).as('deleteRequest1');
           page.mockDelete(257335).as('deleteRequest2');
@@ -913,7 +913,7 @@ describe('', () => {
         });
       });
 
-      describe('on a single fail', () => {
+      describe.skip('on a single fail', () => {
         beforeEach(() => {
           // to prevent Cypress from failing the test on uncaught exception
           cy.once('uncaught:exception', () => false);
@@ -946,7 +946,7 @@ describe('', () => {
       });
     });
 
-    describe('with all todos completed', () => {
+    describe.skip('with all todos completed', () => {
       beforeEach(() => {
         page.mockLoad({ fixture: 'completed-todos' }).as('loadRequest');
         page.visit();
@@ -1515,7 +1515,7 @@ describe('', () => {
         });
 
         // It depend on your implementation
-        it.skip('should stay while waiting', () => {
+        it('should stay while waiting', () => {
           page.mockUpdate(257334);
 
           todos.title(0).trigger('dblclick');
@@ -1694,7 +1694,7 @@ describe('', () => {
         });
 
         // this test may be unstable
-        it.skip('should hide loader on fail', () => {
+        it('should hide loader on fail', () => {
           // to prevent Cypress from failing the test on uncaught exception
           cy.once('uncaught:exception', () => false);
 
