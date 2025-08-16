@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useRef, useState } from 'react';
 import { UserWarning } from './UserWarning';
 import {
@@ -14,13 +12,14 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ErrorNotification } from './components/ErrorNotification';
 import { TodoItem } from './components/TodoItem';
+import { ErrorMessage } from './types/ErrorMessage';
 
 export const App: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [tempTodo, setTempTodo] = useState<Todo | null>(null);
   const [todoTitle, setTodoTitle] = useState('');
   const [editTitle, setEditTitle] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage>('');
   const [currentSelect, setCurrentSelect] = useState('All');
   const [isLoading, setIsLoading] = useState(false);
   const [isUpdatingId, setIsUpdatingId] = useState(-1);
@@ -160,7 +159,7 @@ export const App: React.FC = () => {
           currentTodos.filter(todo => !deletedIds.includes(todo.id)),
         );
       })
-      .catch(() => setErrorMessage('Unable to delete some todos'))
+      .catch(() => setErrorMessage('Unable to delete a todo'))
       .finally(() => {
         setIsLoading(false);
       });
@@ -360,7 +359,6 @@ export const App: React.FC = () => {
           )}
         </section>
 
-        {/* Hide the footer if there are no todos */}
         {todos.length !== 0 && (
           <Footer
             todos={todos}
@@ -371,8 +369,6 @@ export const App: React.FC = () => {
         )}
       </div>
 
-      {/* DON'T use conditional rendering to hide the notification */}
-      {/* Add the 'hidden' class to hide the message smoothly */}
       <ErrorNotification
         errorMessage={errorMessage}
         onSaveErrorMessage={setErrorMessage}
