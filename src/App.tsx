@@ -213,9 +213,10 @@ export const App: React.FC = () => {
     setErrorMessage('');
     setIsLoading(true);
     setIsEditingId(id);
+    setIsUpdatingId(id);
 
     updateTodos({ id, ...todoData })
-      .then(() =>
+      .then(() => {
         setTodos(currentTodos =>
           currentTodos.map(todo => {
             if (todo.id === id) {
@@ -227,12 +228,13 @@ export const App: React.FC = () => {
 
             return todo;
           }),
-        ),
-      )
+        );
+        setIsEditingId(-1);
+      })
       .catch(() => setErrorMessage('Unable to update a todo'))
       .finally(() => {
         setIsLoading(false);
-        setIsEditingId(-1);
+        setIsUpdatingId(-1);
       });
   };
 
@@ -249,12 +251,17 @@ export const App: React.FC = () => {
 
     const trimmedTitle = editTitle.trim();
 
+    if (trimmedTitle === foundTodo?.title) {
+      setIsEditingId(-1);
+
+      return;
+    }
+
     if (!foundTodo) {
       return;
     }
 
     if (!trimmedTitle) {
-      setIsEditingId(-1);
       deleteTodo(foundTodo.id);
 
       return;
@@ -273,7 +280,6 @@ export const App: React.FC = () => {
     }
 
     if (!trimmedTitle) {
-      setIsEditingId(-1);
       deleteTodo(foundTodo.id);
 
       return;
